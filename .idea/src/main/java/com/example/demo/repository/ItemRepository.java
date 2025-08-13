@@ -1,6 +1,6 @@
 package com.example.demo.repository;
 
-import com.example.crudapp.model.Item;
+import com.example.demo.model.Item;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
