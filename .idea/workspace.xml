@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="ed25ab28-914e-4f60-b723-cdb0396df49c" name="Changes" comment="" />
+    <list default="true" id="ed25ab28-914e-4f60-b723-cdb0396df49c" name="Changes" comment="add spring initializer">
+      <change afterPath="$PROJECT_DIR$/.idea/src/main/java/com/example/demo/controller/ItemController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/src/main/java/com/example/demo/model/Item.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/src/main/java/com/example/demo/repository/ItemRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/src/main/java/com/example/demo/service/ItemService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,11 +45,17 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Administrator\IdeaProjects\JavaSpringProject\.idea" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -49,6 +65,15 @@
       <option name="presentableId" value="Default" />
       <updated>1755087670383</updated>
     </task>
+    <task id="LOCAL-00001" summary="add spring initializer">
+      <option name="closed" value="true" />
+      <created>1755088066426</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1755088066426</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -61,5 +86,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add spring initializer" />
+    <option name="LAST_COMMIT_MESSAGE" value="add spring initializer" />
   </component>
 </project>
