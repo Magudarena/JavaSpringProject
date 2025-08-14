@@ -32,14 +32,18 @@ public class ItemService {
     }
 
     public Item updateItem(Long id, Item item) {
-        if (itemRepository.findById(id).isPresent()) {
-            item.setId(id);
-            return itemRepository.save(item);
-        }
-        return null;
+        return itemRepository.findById(id).map(existing -> {
+            existing.setName(item.getName());
+            existing.setDescription(item.getDescription());
+            return itemRepository.save(existing);
+        }).orElse(null);
     }
 
     public boolean deleteItem(Long id) {
-        return itemRepository.delete(id);
+        if (itemRepository.existsById(id)) {
+            itemRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

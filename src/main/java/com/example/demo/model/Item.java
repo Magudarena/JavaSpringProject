@@ -1,9 +1,15 @@
 package com.example.demo.model;
+import jakarta.persistence.*;
 
+@Entity
 public class Item {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String description;
+
+    public Item() {}
 
     public Item(Long id, String name, String description) {
         this.id = id;
