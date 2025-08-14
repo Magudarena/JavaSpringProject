@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Items – Basic Frontend</title>
+  <title>Items</title>
+  <link rel="stylesheet" href="index.css" />
   <style>
     body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 32px; }
     h1 { margin-top: 0; }
@@ -24,15 +25,15 @@
   <h1>Items</h1>
 
   <div class="card">
-    <h2 style="margin-top:0">Dodaj nowy</h2>
+    <h2 style="margin-top:0">Add a new item</h2>
     <form id="create-form">
-      <label for="name">Nazwa</label>
+      <label for="name">Name</label>
       <input id="name" name="name" required />
-      <label for="description">Opis</label>
+      <label for="description">Description</label>
       <textarea id="description" name="description" rows="3"></textarea>
       <div style="margin-top:10px">
-        <button type="submit">Utwórz</button>
-        <button type="button" id="reload-btn">Odśwież listę</button>
+        <button type="submit">Create</button>
+        <button type="button" id="reload-btn">Reload</button>
       </div>
     </form>
   </div>
@@ -118,8 +119,8 @@
           <td>${escapeHtml(it.name || '')}</td>
           <td>${escapeHtml(it.description || '')}</td>
           <td class="row-actions">
-            <button data-action="edit" data-id="${it.id}">Edytuj</button>
-            <button data-action="delete" data-id="${it.id}">Usuń</button>
+            <button data-action="edit" data-id="${it.id}">Rename</button>
+            <button data-action="delete" data-id="${it.id}">Remove</button>
           </td>
         `;
         tbody.appendChild(tr);
