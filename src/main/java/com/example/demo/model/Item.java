@@ -1,13 +1,24 @@
 package com.example.demo.model;
+
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 public class Item {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
     private String description;
+
+    @OneToMany(
+            mappedBy = "item",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<SubItem> subItemList;
 
     public Item() {}
 
@@ -16,6 +27,8 @@ public class Item {
         this.name = name;
         this.description = description;
     }
+
+    // Getters and Setters
 
     public Long getId() {
         return id;
@@ -39,5 +52,13 @@ public class Item {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<SubItem> getSubItemList() {
+        return subItemList;
+    }
+
+    public void setSubItemList(List<SubItem> subItemList) {
+        this.subItemList = subItemList;
     }
 }
