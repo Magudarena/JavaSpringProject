@@ -1,6 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Item;
+import com.example.demo.model.SubItem;
+import com.example.demo.repository.ItemRepository;
+import com.example.demo.repository.SubItemRepository;
 import com.example.demo.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,5 +51,31 @@ public class ItemController {
     public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
         return itemService.deleteItem(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
+
+    @Autowired
+    private SubItemRepository subItemRepository;
+
+    @Autowired
+    private ItemRepository itemRepository;
+
+
+/*
+    @PostMapping
+    public ResponseEntity<SubItem> createSubItem(@RequestBody SubItem subItem) {
+        if (subItem.getItem() == null || subItem.getItem().getId() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Item item = itemRepository.findById(subItem.getItem().getId())
+                .orElseThrow(() -> new RuntimeException("Item not found"));
+
+        subItem.setItem(item);
+        SubItem saved = subItemRepository.save(subItem);
+        return ResponseEntity.ok(saved);
+    }
+*/
+
+
+
 }
 

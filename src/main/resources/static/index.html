@@ -22,10 +22,10 @@
   </style>
 </head>
 <body>
-  <h1>Items</h1>
+  <h1>Just do it:</h1>
 
   <div class="card">
-    <h2 style="margin-top:0">Add a new item</h2>
+    <h2 style="margin-top:0">Add a new item to do</h2>
     <form id="create-form">
       <label for="name">Name</label>
       <input id="name" name="name" required />
@@ -54,6 +54,29 @@
       </tbody>
     </table>
   </div>
+
+<!--  <form id="subitem-form">
+    <input type="text" id="subitem-name" placeholder="SubItem name" required />
+    <input type="text" id="subitem-description" placeholder="Description" />
+    <input type="number" id="item-id" placeholder="ID Item" required />
+    <button type="submit">Dodaj SubItem</button>
+  </form>-->
+
+  <div class="card">
+    <h2>Add a smaller task</h2>
+    <form id="subitem-form">
+      <label for="subitem-name">Name</label>
+      <input id="subitem-name" name="name" required />
+      <label for="subitem-description">Description</label>
+      <textarea id="subitem-description" name="description" rows="3"></textarea>
+      <label for="subitem-item">ID of the original to do</label>
+      <input id="subitem-item" name="itemId" type="number" required />
+      <div style="margin-top:10px">
+        <button type="submit">Add</button>
+      </div>
+    </form>
+  </div>
+
 
   <div id="toast" class="toast" style="display:none"></div>
 
@@ -183,6 +206,7 @@
         tbody.innerHTML = `<tr><td colspan="4">Błąd ładowania listy.</td></tr>`;
       }
     }
+
 
     // Initial load
     load();
