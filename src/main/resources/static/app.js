@@ -22,7 +22,6 @@ const ItemAPI = {
   delete: id => api(`/${id}`, { method: 'DELETE' })
 };
 
-// -- CRUD dla SubItems --
 const SubAPI = {
   list: itemId => api(`/${itemId}/subitems`),
   create: (itemId, data) => api(`/${itemId}/subitems`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)}),
@@ -30,7 +29,6 @@ const SubAPI = {
   delete: (itemId, id) => api(`/${itemId}/subitems/${id}`, { method:'DELETE'})
 };
 
-// -- Renderowanie tabel --
 function renderTable(tbodyEl, rowsHtml) {
   tbodyEl.innerHTML = rowsHtml || '<tr><td colspan="4" class="muted">Brak danych.</td></tr>';
 }
@@ -65,7 +63,6 @@ function renderSubs(subs) {
   renderTable(document.getElementById('subitems-tbody'), html);
 }
 
-// -- Inicjalizacja i eventy --
 async function loadItems() {
   try { renderItems(await ItemAPI.all()); }
   catch { toast('Błąd ładowania Itemów'); }
@@ -74,12 +71,12 @@ async function loadItems() {
 document.getElementById('create-form').addEventListener('submit', async e => {
   e.preventDefault();
   const data = { name: e.target.name.value.trim(), description: e.target.description.value.trim() };
-  if (!data.name) return toast('Podaj nazwę Itemu');
+  if (!data.name) return toast('Set the name');
   try {
     await ItemAPI.create(data);
     e.target.reset();
-    loadItems(); toast('Item dodany');
-  } catch { toast('Błąd zapisu Itemu'); }
+    loadItems(); toast('Item added');
+  } catch { toast('Error'); }
 });
 
 document.getElementById('reload-btn').onclick = loadItems;
@@ -89,8 +86,8 @@ document.body.addEventListener('click', async e => {
   const id     = e.target.dataset.id;
 
   if (action === 'del-item' && confirm('Usuń Item?')) {
-    try { await ItemAPI.delete(id); loadItems(); toast('Item usunięty'); }
-    catch { toast('Błąd usuwania Itemu'); }
+    try { await ItemAPI.delete(id); loadItems(); toast('Item deleted'); }
+    catch { toast('Error'); }
   }
 
   if (action === 'sub') {
@@ -98,15 +95,15 @@ document.body.addEventListener('click', async e => {
     document.getElementById('subitem-section').hidden = false;
     document.getElementById('subitem-title').textContent = `SubItemy dla: ${id}`;
     try { renderSubs(await SubAPI.list(id)); }
-    catch { toast('Błąd ładowania SubItemów'); }
+    catch { toast('Error'); }
   }
 
-  if (action === 'del-sub' && confirm('Usuń SubItem?')) {
+  if (action === 'del-sub' && confirm('Delete SubItem?')) {
     try {
       await SubAPI.delete(currentItemId, id);
       renderSubs(await SubAPI.list(currentItemId));
-      toast('SubItem usunięty');
-    } catch { toast('Błąd usuwania SubItemu'); }
+      toast('SubItem deleted');
+    } catch { toast('Error'); }
   }
 
   if (action === 'edit-sub') {
@@ -124,20 +121,20 @@ document.getElementById('subitem-form').addEventListener('submit', async e => {
   const desc = e.target['description'].value.trim();
   const editId = e.target.dataset.editId;
 
-  if (!name) return toast('Podaj nazwę SubItemu');
+  if (!name) return toast('Add SubItem name');
   try {
     if (editId) {
       await SubAPI.update(currentItemId, editId, { name, description: desc });
       delete e.target.dataset.editId;
-      toast('SubItem zaktualizowany');
+      toast('SubItem updated');
     } else {
       await SubAPI.create(currentItemId, { name, description: desc });
-      toast('SubItem dodany');
+      toast('SubItem added');
     }
     e.target.reset();
     renderSubs(await SubAPI.list(currentItemId));
   } catch {
-    toast('Błąd zapisu SubItemu');
+    toast('Error');
   }
 });
 

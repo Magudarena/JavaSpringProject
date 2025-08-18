@@ -3,12 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Items & SubItems</title>
+  <title>To do list</title>
 
-  <!-- Link do arkusza stylów -->
   <link rel="stylesheet" href="styles.css">
 
-  <!-- Font Awesome dla ikon -->
   <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
@@ -23,12 +21,12 @@
 
   <!-- Sekcja tworzenia Itemu -->
   <section class="card" id="item-create">
-    <h2>Dodaj nowy Item</h2>
+    <h2>Add new item</h2>
     <form id="create-form" class="form">
-      <label for="name">Nazwa:</label>
+      <label for="name">Name:</label>
       <input id="name" name="name" type="text" required />
 
-      <label for="description">Opis:</label>
+      <label for="description">Description:</label>
       <textarea id="description" name="description" rows="3"></textarea>
 
       <div class="form-actions">
@@ -42,39 +40,38 @@
     </form>
   </section>
 
-  <!-- Lista Itemów -->
   <section class="card" id="items-list">
-    <h2>Lista Itemów</h2>
+    <h2>Items list</h2>
     <table>
       <thead>
       <tr>
         <th>ID</th>
-        <th>Nazwa</th>
-        <th>Opis</th>
-        <th>Akcje</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Actions</th>
       </tr>
       </thead>
       <tbody id="items-tbody">
       <tr>
-        <td colspan="4" class="muted">Ładowanie…</td>
+        <td colspan="4" class="muted">Loading…</td>
       </tr>
       </tbody>
     </table>
   </section>
 
   <section class="card" id="subitem-section" hidden>
-    <h2 id="subitem-title">SubItemy dla: …</h2>
+    <h2 id="subitem-title">SubItems: …</h2>
 
     <form id="subitem-form" class="form">
-      <label for="sub-name">Nazwa:</label>
+      <label for="sub-name">Name:</label>
       <input id="sub-name" name="name" type="text" required />
 
-      <label for="sub-description">Opis:</label>
+      <label for="sub-description">Description:</label>
       <textarea id="sub-description" name="description" rows="2"></textarea>
 
       <div class="form-actions">
         <button type="submit" class="btn btn-accent">
-          <i class="fas fa-plus"></i> Dodaj SubItem
+          <i class="fas fa-plus"></i> Add SubItem
         </button>
       </div>
     </form>
@@ -83,14 +80,14 @@
       <thead>
       <tr>
         <th>ID</th>
-        <th>Nazwa</th>
-        <th>Opis</th>
-        <th>Akcje</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Actions</th>
       </tr>
       </thead>
       <tbody id="subitems-tbody">
       <tr>
-        <td colspan="4" class="muted">Brak danych.</td>
+        <td colspan="4" class="muted">No data.</td>
       </tr>
       </tbody>
     </table>

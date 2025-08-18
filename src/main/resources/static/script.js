@@ -31,9 +31,9 @@
     });
 
     if (response.ok) {
-      alert('SubItem dodany!');
+      alert('SubItem added!');
     } else {
-      alert('Błąd przy dodawaniu SubItemu');
+      alert('Error');
     }
   });
 
@@ -58,7 +58,7 @@ document.getElementById('subitem-form').addEventListener('submit', async (e) => 
   const description = document.getElementById('subitem-description').value.trim();
   const itemId = document.getElementById('subitem-item').value.trim();
 
-  if (!name || !itemId) return toast('Podaj nazwę i ID itemu');
+  if (!name || !itemId) return toast('Name and ID missing');
 
   try {
     await fetch('/subitems', {
@@ -70,10 +70,10 @@ document.getElementById('subitem-form').addEventListener('submit', async (e) => 
         item: { id: parseInt(itemId) }
       })
     });
-    toast('SubItem dodany');
+    toast('SubItem added');
     document.getElementById('subitem-form').reset();
   } catch {
-    toast('Błąd dodawania SubItemu');
+    toast('Error');
   }
 });
 
