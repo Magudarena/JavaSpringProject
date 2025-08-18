@@ -1,13 +1,20 @@
 package com.example.demo.model;
+
 import jakarta.persistence.*;
 
 @Entity
 public class SubItem {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "item_id")
+    private Item item;
 
     public SubItem() {}
 
@@ -16,6 +23,8 @@ public class SubItem {
         this.name = name;
         this.description = description;
     }
+
+    // Getters and Setters
 
     public Long getId() {
         return id;
@@ -39,5 +48,13 @@ public class SubItem {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 }
