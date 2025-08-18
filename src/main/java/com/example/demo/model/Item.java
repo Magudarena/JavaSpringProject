@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -12,12 +13,12 @@ public class Item {
 
     private String name;
     private String description;
-
     @OneToMany(
             mappedBy = "item",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @JsonBackReference
     private List<SubItem> subItemList;
 
     public Item() {}

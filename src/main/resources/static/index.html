@@ -3,213 +3,105 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Items</title>
-  <link rel="stylesheet" href="index.css" />
-  <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 32px; }
-    h1 { margin-top: 0; }
-    .card { border: 1px solid #ddd; border-radius: 8px; padding: 16px; margin-bottom: 24px; }
-    label { display: block; margin: 6px 0 4px; }
-    input, textarea { width: 100%; padding: 8px; box-sizing: border-box; }
-    button { cursor: pointer; padding: 8px 12px; border: 1px solid #ccc; background: #f8f8f8; border-radius: 6px; }
-    button:hover { background: #eee; }
-    table { width: 100%; border-collapse: collapse; }
-    th, td { border-bottom: 1px solid #eee; padding: 10px; text-align: left; vertical-align: top; }
-    th { background: #fafafa; }
-    .row-actions { display: flex; gap: 8px; }
-    .muted { color: #777; }
-    .toast { position: fixed; bottom: 16px; right: 16px; background: #222; color:#fff; padding:10px 14px; border-radius:8px; opacity:0.95; }
-  </style>
+  <title>Items & SubItems</title>
+
+  <!-- Link do arkusza stylów -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Font Awesome dla ikon -->
+  <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+          integrity="sha512-..."
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"
+  />
 </head>
 <body>
-  <h1>Just do it:</h1>
+<main class="container">
+  <h1>Items &amp; SubItems</h1>
 
-  <div class="card">
-    <h2 style="margin-top:0">Add a new item to do</h2>
-    <form id="create-form">
-      <label for="name">Name</label>
-      <input id="name" name="name" required />
-      <label for="description">Description</label>
+  <!-- Sekcja tworzenia Itemu -->
+  <section class="card" id="item-create">
+    <h2>Dodaj nowy Item</h2>
+    <form id="create-form" class="form">
+      <label for="name">Nazwa:</label>
+      <input id="name" name="name" type="text" required />
+
+      <label for="description">Opis:</label>
       <textarea id="description" name="description" rows="3"></textarea>
-      <div style="margin-top:10px">
-        <button type="submit">Create</button>
-        <button type="button" id="reload-btn">Reload</button>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-plus"></i> Utwórz
+        </button>
+        <button type="button" id="reload-btn" class="btn btn-info">
+          <i class="fas fa-sync"></i> Odśwież
+        </button>
       </div>
     </form>
-  </div>
+  </section>
 
-  <div class="card">
-    <h2 style="margin-top:0">Lista</h2>
+  <!-- Lista Itemów -->
+  <section class="card" id="items-list">
+    <h2>Lista Itemów</h2>
     <table>
       <thead>
-        <tr>
-          <th style="width:80px">ID</th>
-          <th>Nazwa</th>
-          <th>Opis</th>
-          <th style="width:220px">Akcje</th>
-        </tr>
+      <tr>
+        <th>ID</th>
+        <th>Nazwa</th>
+        <th>Opis</th>
+        <th>Akcje</th>
+      </tr>
       </thead>
       <tbody id="items-tbody">
-        <tr><td colspan="4" class="muted">Ładowanie…</td></tr>
+      <tr>
+        <td colspan="4" class="muted">Ładowanie…</td>
+      </tr>
       </tbody>
     </table>
-  </div>
+  </section>
 
-<!--  <form id="subitem-form">
-    <input type="text" id="subitem-name" placeholder="SubItem name" required />
-    <input type="text" id="subitem-description" placeholder="Description" />
-    <input type="number" id="item-id" placeholder="ID Item" required />
-    <button type="submit">Dodaj SubItem</button>
-  </form>-->
+  <!-- Sekcja SubItemów -->
+  <section class="card" id="subitem-section" hidden>
+    <h2 id="subitem-title">SubItemy dla: …</h2>
 
-  <div class="card">
-    <h2>Add a smaller task</h2>
-    <form id="subitem-form">
-      <label for="subitem-name">Name</label>
-      <input id="subitem-name" name="name" required />
-      <label for="subitem-description">Description</label>
-      <textarea id="subitem-description" name="description" rows="3"></textarea>
-      <label for="subitem-item">ID of the original to do</label>
-      <input id="subitem-item" name="itemId" type="number" required />
-      <div style="margin-top:10px">
-        <button type="submit">Add</button>
+    <form id="subitem-form" class="form">
+      <label for="sub-name">Nazwa:</label>
+      <input id="sub-name" name="name" type="text" required />
+
+      <label for="sub-description">Opis:</label>
+      <textarea id="sub-description" name="description" rows="2"></textarea>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-accent">
+          <i class="fas fa-plus"></i> Dodaj SubItem
+        </button>
       </div>
     </form>
-  </div>
 
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nazwa</th>
+        <th>Opis</th>
+        <th>Akcje</th>
+      </tr>
+      </thead>
+      <tbody id="subitems-tbody">
+      <tr>
+        <td colspan="4" class="muted">Brak danych.</td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
+</main>
 
-  <div id="toast" class="toast" style="display:none"></div>
+<!-- Toast -->
+<div id="toast" class="toast"></div>
 
-  <script>
-    const API = '/items'; // bo frontend serwowany jest z tego samego hosta
-
-    // Helpers
-    const toast = (msg) => {
-      const el = document.getElementById('toast');
-      el.textContent = msg;
-      el.style.display = 'block';
-      setTimeout(() => el.style.display = 'none', 2200);
-    };
-
-    const json = (res) => {
-      if (!res.ok) throw res;
-      if (res.status === 204) return null;
-      return res.json();
-    };
-
-    // CRUD calls
-    async function fetchAll() {
-      const res = await fetch(API);
-      return json(res);
-    }
-
-    async function createItem(item) {
-      const res = await fetch(API, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(item)
-      });
-      return json(res);
-    }
-
-    async function updateItem(id, item) {
-      const res = await fetch(`${API}/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(item)
-      });
-      return json(res);
-    }
-
-    async function deleteItem(id) {
-      const res = await fetch(`${API}/${id}`, { method: 'DELETE' });
-      if (!res.ok) throw res;
-      return true;
-    }
-
-    // UI render
-    function renderRows(items) {
-      const tbody = document.getElementById('items-tbody');
-      if (!items || items.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" class="muted">Brak elementów.</td></tr>`;
-        return;
-      }
-      tbody.innerHTML = '';
-      for (const it of items) {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${it.id ?? '—'}</td>
-          <td>${escapeHtml(it.name || '')}</td>
-          <td>${escapeHtml(it.description || '')}</td>
-          <td class="row-actions">
-            <button data-action="edit" data-id="${it.id}">Rename</button>
-            <button data-action="delete" data-id="${it.id}">Remove</button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      }
-    }
-
-    function escapeHtml(s) {
-      return String(s).replace(/[&<>"']/g, (c) =>
-        ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])
-      );
-    }
-
-    // Events
-    document.getElementById('create-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const name = document.getElementById('name').value.trim();
-      const description = document.getElementById('description').value.trim();
-      if (!name) return toast('Podaj nazwę');
-      try {
-        await createItem({ name, description });
-        document.getElementById('name').value = '';
-        document.getElementById('description').value = '';
-        toast('Utworzono');
-        load();
-      } catch (err) {
-        toast('Błąd tworzenia');
-      }
-    });
-
-    document.getElementById('reload-btn').addEventListener('click', load);
-
-    document.getElementById('items-tbody').addEventListener('click', async (e) => {
-      const btn = e.target.closest('button');
-      if (!btn) return;
-      const id = btn.dataset.id;
-      if (btn.dataset.action === 'delete') {
-        if (!confirm(`Usunąć element #${id}?`)) return;
-        try { await deleteItem(id); toast('Usunięto'); load(); }
-        catch { toast('Błąd usuwania'); }
-      }
-      if (btn.dataset.action === 'edit') {
-        const currRow = btn.closest('tr').children;
-        const currentName = currRow[1].textContent;
-        const currentDesc = currRow[2].textContent;
-        const name = prompt('Nazwa:', currentName);
-        if (name === null) return;
-        const description = prompt('Opis:', currentDesc);
-        if (description === null) return;
-        try { await updateItem(id, { id, name, description }); toast('Zaktualizowano'); load(); }
-        catch { toast('Błąd aktualizacji'); }
-      }
-    });
-
-    async function load() {
-      try {
-        const items = await fetchAll();
-        renderRows(items);
-      } catch (err) {
-        const tbody = document.getElementById('items-tbody');
-        tbody.innerHTML = `<tr><td colspan="4">Błąd ładowania listy.</td></tr>`;
-      }
-    }
-
-
-    // Initial load
-    load();
-  </script>
+<!-- Skrypt z logiką (podmień na swój) -->
+<script src="app.js" type="module"></script>
 </body>
 </html>
