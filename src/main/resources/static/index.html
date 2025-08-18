@@ -1,70 +1,85 @@
 <!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Items & SubItems – Frontend</title>
-  <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 32px; }
-    h1 { margin-top: 0; }
-    .card { border: 1px solid #ddd; border-radius: 8px; padding: 16px; margin-bottom: 24px; }
-    label { display: block; margin: 6px 0 4px; }
-    input, textarea { width: 100%; padding: 8px; box-sizing: border-box; }
-    button { cursor: pointer; padding: 8px 12px; border: 1px solid #ccc; background: #f8f8f8; border-radius: 6px; }
-    button:hover { background: #eee; }
-    table { width: 100%; border-collapse: collapse; }
-    th, td { border-bottom: 1px solid #eee; padding: 10px; text-align: left; vertical-align: top; }
-    th { background: #fafafa; }
-    .row-actions { display: flex; gap: 8px; }
-    .muted { color: #777; }
-    .toast { position: fixed; bottom: 16px; right: 16px; background: #222; color:#fff; padding:10px 14px; border-radius:8px; opacity:0.95; }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Items & SubItems</title>
+
+  <!-- Link do arkusza stylów -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Font Awesome dla ikon -->
+  <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+          integrity="sha512-..."
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"
+  />
 </head>
 <body>
-<h1>Items</h1>
+<main class="container">
+  <h1>Items &amp; SubItems</h1>
 
-<div class="card">
-  <h2>Dodaj nowy Item</h2>
-  <form id="create-form">
-    <label for="name">Nazwa</label>
-    <input id="name" name="name" required />
-    <label for="description">Opis</label>
-    <textarea id="description" name="description" rows="3"></textarea>
-    <div style="margin-top:10px">
-      <button type="submit">Utwórz</button>
-      <button type="button" id="reload-btn">Odśwież listę</button>
-    </div>
-  </form>
-</div>
+  <!-- Sekcja tworzenia Itemu -->
+  <section class="card" id="item-create">
+    <h2>Dodaj nowy Item</h2>
+    <form id="create-form" class="form">
+      <label for="name">Nazwa:</label>
+      <input id="name" name="name" type="text" required />
 
-<div class="card">
-  <h2>Lista Itemów</h2>
-  <table>
-    <thead>
-    <tr>
-      <th>ID</th>
-      <th>Nazwa</th>
-      <th>Opis</th>
-      <th>Akcje</th>
-    </tr>
-    </thead>
-    <tbody id="items-tbody">
-    <tr><td colspan="4" class="muted">Ładowanie…</td></tr>
-    </tbody>
-  </table>
-</div>
+      <label for="description">Opis:</label>
+      <textarea id="description" name="description" rows="3"></textarea>
 
-<div class="card">
-  <h2>SubItemy</h2>
-  <div id="subitem-section" style="display:none">
-    <h3 id="subitem-title"></h3>
-    <form id="subitem-form">
-      <label for="sub-name">Nazwa</label>
-      <input id="sub-name" name="name" required />
-      <label for="sub-description">Opis</label>
-      <textarea id="sub-description" name="description" rows="2"></textarea>
-      <button type="submit">Dodaj SubItem</button>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-plus"></i> Utwórz
+        </button>
+        <button type="button" id="reload-btn" class="btn btn-info">
+          <i class="fas fa-sync"></i> Odśwież
+        </button>
+      </div>
     </form>
+  </section>
+
+  <!-- Lista Itemów -->
+  <section class="card" id="items-list">
+    <h2>Lista Itemów</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nazwa</th>
+        <th>Opis</th>
+        <th>Akcje</th>
+      </tr>
+      </thead>
+      <tbody id="items-tbody">
+      <tr>
+        <td colspan="4" class="muted">Ładowanie…</td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Sekcja SubItemów -->
+  <section class="card" id="subitem-section" hidden>
+    <h2 id="subitem-title">SubItemy dla: …</h2>
+
+    <form id="subitem-form" class="form">
+      <label for="sub-name">Nazwa:</label>
+      <input id="sub-name" name="name" type="text" required />
+
+      <label for="sub-description">Opis:</label>
+      <textarea id="sub-description" name="description" rows="2"></textarea>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-accent">
+          <i class="fas fa-plus"></i> Dodaj SubItem
+        </button>
+      </div>
+    </form>
+
     <table>
       <thead>
       <tr>
@@ -75,226 +90,18 @@
       </tr>
       </thead>
       <tbody id="subitems-tbody">
-      <tr><td colspan="4" class="muted">Brak danych.</td></tr>
+      <tr>
+        <td colspan="4" class="muted">Brak danych.</td>
+      </tr>
       </tbody>
     </table>
-  </div>
-</div>
+  </section>
+</main>
 
-<div id="toast" class="toast" style="display:none"></div>
+<!-- Toast -->
+<div id="toast" class="toast"></div>
 
-<script>
-  const baseUrl = '/items';
-  let currentItemId = null;
-
-  function toast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.style.display = 'block';
-    setTimeout(() => t.style.display = 'none', 2000);
-  }
-
-  // ITEM APIs
-  async function fetchAll() {
-    const res = await fetch(`${baseUrl}`);
-    if (!res.ok) throw new Error();
-    return await res.json();
-  }
-
-  async function createItem(data) {
-    const res = await fetch(`${baseUrl}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    if (!res.ok) throw new Error();
-    return await res.json();
-  }
-
-  async function deleteItem(id) {
-    const res = await fetch(`${baseUrl}/${id}`, { method: 'DELETE' });
-    if (!res.ok && res.status !== 204) throw new Error();
-  }
-
-  // SUBITEM APIs
-  async function fetchSubItems(itemId) {
-    const res = await fetch(`${baseUrl}/${itemId}/subitems`);
-    if (!res.ok) throw new Error();
-    return await res.json();
-  }
-
-  async function createSubItem(itemId, data) {
-    const res = await fetch(`${baseUrl}/${itemId}/subitems`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    if (!res.ok) throw new Error();
-    return await res.json();
-  }
-
-  async function updateSubItem(itemId, id, data) {
-    const res = await fetch(`${baseUrl}/${itemId}/subitems/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    if (!res.ok) throw new Error();
-    return await res.json();
-  }
-
-  async function deleteSubItem(itemId, id) {
-    const res = await fetch(`${baseUrl}/${itemId}/subitems/${id}`, { method: 'DELETE' });
-    if (!res.ok && res.status !== 204) throw new Error();
-  }
-
-  // RENDER HELPERS
-  function renderRows(items) {
-    const tbody = document.getElementById('items-tbody');
-    if (!items.length) {
-      tbody.innerHTML = '<tr><td colspan="4" class="muted">Brak danych.</td></tr>';
-      return;
-    }
-    tbody.innerHTML = items.map(i => `
-      <tr>
-        <td>${i.id}</td>
-        <td>${i.name}</td>
-        <td>${i.description}</td>
-        <td class="row-actions">
-          <button data-action="subitems" data-id="${i.id}">SubItemy</button>
-          <button data-action="delete"   data-id="${i.id}">Usuń</button>
-        </td>
-      </tr>
-    `).join('');
-  }
-
-  function renderSubItems(subs) {
-    const tbody = document.getElementById('subitems-tbody');
-    if (!subs.length) {
-      tbody.innerHTML = '<tr><td colspan="4" class="muted">Brak danych.</td></tr>';
-      return;
-    }
-    tbody.innerHTML = subs.map(s => `
-      <tr>
-        <td>${s.id}</td>
-        <td>${s.name}</td>
-        <td>${s.description}</td>
-        <td class="row-actions">
-          <button data-action="edit-sub"   data-id="${s.id}">Edytuj</button>
-          <button data-action="delete-sub" data-id="${s.id}">Usuń</button>
-        </td>
-      </tr>
-    `).join('');
-  }
-
-  // LOAD LIST OF ITEMS
-  async function loadItems() {
-    try {
-      const items = await fetchAll();
-      renderRows(items);
-    } catch {
-      toast('Błąd podczas ładowania Itemów');
-    }
-  }
-
-  // ITEM FORM HANDLER
-  document.getElementById('create-form').addEventListener('submit', async e => {
-    e.preventDefault();
-    const name = e.target.name.value.trim();
-    const desc = e.target.description.value.trim();
-    if (!name) return toast('Podaj nazwę Itemu');
-    try {
-      await createItem({ name, description: desc });
-      e.target.reset();
-      loadItems();
-      toast('Dodano Item');
-    } catch {
-      toast('Błąd podczas zapisu Itemu');
-    }
-  });
-
-  document.getElementById('reload-btn').addEventListener('click', loadItems);
-
-  // DELEGATED CLICK LISTENER
-  document.addEventListener('click', async e => {
-    const btn = e.target;
-    const action = btn.dataset.action;
-    const id     = btn.dataset.id;
-
-    if (action === 'subitems') {
-      currentItemId = id;
-      const items = await fetchAll();
-      const current = items.find(i => i.id == id);
-      document.getElementById('subitem-title').textContent = `SubItemy dla: ${current.name}`;
-      document.getElementById('subitem-section').style.display = 'block';
-      try {
-        const subs = await fetchSubItems(id);
-        renderSubItems(subs);
-      } catch {
-        toast('Błąd podczas ładowania SubItemów');
-      }
-    }
-
-    if (action === 'delete') {
-      if (!confirm('Czy na pewno chcesz usunąć ten Item?')) return;
-      try {
-        await deleteItem(id);
-        loadItems();
-        toast('Usunięto Item');
-      } catch {
-        toast('Błąd podczas usuwania Itemu');
-      }
-    }
-
-    if (action === 'delete-sub') {
-      if (!confirm('Czy na pewno chcesz usunąć ten SubItem?')) return;
-      try {
-        await deleteSubItem(currentItemId, id);
-        const subs = await fetchSubItems(currentItemId);
-        renderSubItems(subs);
-        toast('Usunięto SubItem');
-      } catch {
-        toast('Błąd podczas usuwania SubItemu');
-      }
-    }
-
-    if (action === 'edit-sub') {
-      const subs = await fetchSubItems(currentItemId);
-      const target = subs.find(s => s.id == id);
-      document.getElementById('sub-name').value = target.name;
-      document.getElementById('sub-description').value = target.description;
-      document.getElementById('subitem-form').dataset.editId = id;
-    }
-  });
-
-  // SUBITEM FORM HANDLER
-  document.getElementById('subitem-form').addEventListener('submit', async e => {
-    e.preventDefault();
-    const name = document.getElementById('sub-name').value.trim();
-    const desc = document.getElementById('sub-description').value.trim();
-    const editId = e.target.dataset.editId;
-
-    if (!name) return toast('Podaj nazwę SubItemu');
-
-    try {
-      if (editId) {
-        await updateSubItem(currentItemId, editId, { name, description: desc });
-        toast('Zaktualizowano SubItem');
-      } else {
-        await createSubItem(currentItemId, { name, description: desc });
-        toast('Dodano SubItem');
-      }
-      e.target.reset();
-      delete e.target.dataset.editId;
-      const subs = await fetchSubItems(currentItemId);
-      renderSubItems(subs);
-    } catch {
-      toast('Błąd podczas zapisu SubItemu');
-    }
-  });
-
-  // STARTUP
-  loadItems();
-</script>
+<!-- Skrypt z logiką (podmień na swój) -->
+<script src="app.js" type="module"></script>
 </body>
 </html>
