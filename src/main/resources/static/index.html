@@ -1,107 +1,76 @@
-<!doctype html>
-<html lang="pl">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Items & SubItems</title>
-
-  <!-- Link do arkusza stylów -->
-  <link rel="stylesheet" href="styles.css">
-
-  <!-- Font Awesome dla ikon -->
-  <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-          integrity="sha512-..."
-          crossorigin="anonymous"
-          referrerpolicy="no-referrer"
-  />
 </head>
 <body>
-<main class="container">
-  <h1>Items &amp; SubItems</h1>
+<h1>Items & SubItems</h1>
 
-  <!-- Sekcja tworzenia Itemu -->
-  <section class="card" id="item-create">
-    <h2>Dodaj nowy Item</h2>
-    <form id="create-form" class="form">
-      <label for="name">Nazwa:</label>
-      <input id="name" name="name" type="text" required />
 
-      <label for="description">Opis:</label>
-      <textarea id="description" name="description" rows="3"></textarea>
+<section>
+  <h2>Add New Item</h2>
+  <form id="create-item-form">
+    <label>
+      Name:
+      <input type="text" name="name" required />
+    </label>
+    <br>
+    <label>
+      Description:
+      <textarea name="description" rows="2"></textarea>
+    </label>
+    <br>
+    <button type="submit">Create Item</button>
+  </form>
+</section>
 
-      <div class="form-actions">
-        <button type="submit" class="btn btn-primary">
-          <i class="fas fa-plus"></i> Utwórz
-        </button>
-        <button type="button" id="reload-btn" class="btn btn-info">
-          <i class="fas fa-sync"></i> Odśwież
-        </button>
-      </div>
-    </form>
-  </section>
 
-  <!-- Lista Itemów -->
-  <section class="card" id="items-list">
-    <h2>Lista Itemów</h2>
-    <table>
-      <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nazwa</th>
-        <th>Opis</th>
-        <th>Akcje</th>
-      </tr>
-      </thead>
-      <tbody id="items-tbody">
-      <tr>
-        <td colspan="4" class="muted">Ładowanie…</td>
-      </tr>
-      </tbody>
-    </table>
-  </section>
+<section>
+  <h2>Items</h2>
+  <table border="1" cellpadding="4" cellspacing="0">
+    <thead>
+    <tr>
+      <th>ID</th><th>Name</th><th>Description</th><th>Actions</th>
+    </tr>
+    </thead>
+    <tbody id="items-tbody">
+    <tr><td colspan="4">Loading…</td></tr>
+    </tbody>
+  </table>
+</section>
 
-  <!-- Sekcja SubItemów -->
-  <section class="card" id="subitem-section" hidden>
-    <h2 id="subitem-title">SubItemy dla: …</h2>
 
-    <form id="subitem-form" class="form">
-      <label for="sub-name">Nazwa:</label>
-      <input id="sub-name" name="name" type="text" required />
+<section id="subitem-section" style="display:none; margin-top:20px">
+  <h2 id="subitem-title">SubItems for:</h2>
 
-      <label for="sub-description">Opis:</label>
-      <textarea id="sub-description" name="description" rows="2"></textarea>
+  <form id="create-subitem-form">
+    <label>
+      Name:
+      <input type="text" name="name" required />
+    </label>
+    <br>
+    <label>
+      Description:
+      <textarea name="description" rows="2"></textarea>
+    </label>
+    <br>
+    <button type="submit">Create SubItem</button>
+  </form>
 
-      <div class="form-actions">
-        <button type="submit" class="btn btn-accent">
-          <i class="fas fa-plus"></i> Dodaj SubItem
-        </button>
-      </div>
-    </form>
+  <table border="1" cellpadding="4" cellspacing="0" style="margin-top:10px">
+    <thead>
+    <tr>
+      <th>ID</th><th>Name</th><th>Description</th><th>Actions</th>
+    </tr>
+    </thead>
+    <tbody id="subitems-tbody">
+    <tr><td colspan="4">No subitems</td></tr>
+    </tbody>
+  </table>
+</section>
 
-    <table>
-      <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nazwa</th>
-        <th>Opis</th>
-        <th>Akcje</th>
-      </tr>
-      </thead>
-      <tbody id="subitems-tbody">
-      <tr>
-        <td colspan="4" class="muted">Brak danych.</td>
-      </tr>
-      </tbody>
-    </table>
-  </section>
-</main>
 
-<!-- Toast -->
-<div id="toast" class="toast"></div>
-
-<!-- Skrypt z logiką (podmień na swój) -->
-<script src="app.js" type="module"></script>
+<script src="app.js"></script>
 </body>
 </html>
