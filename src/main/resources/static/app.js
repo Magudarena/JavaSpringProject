@@ -30,7 +30,7 @@ const SubAPI = {
 };
 
 function renderTable(tbodyEl, rowsHtml) {
-  tbodyEl.innerHTML = rowsHtml || '<tr><td colspan="4" class="muted">Brak danych.</td></tr>';
+  tbodyEl.innerHTML = rowsHtml || '<tr><td colspan="4" class="muted">No data.</td></tr>';
 }
 
 function renderItems(items) {
@@ -40,8 +40,8 @@ function renderItems(items) {
       <td>${i.name}</td>
       <td>${i.description}</td>
       <td class="row-actions">
-        <button data-action="sub" data-id="${i.id}">SubItemy</button>
-        <button data-action="del-item" data-id="${i.id}">Usuń</button>
+        <button data-action="sub" data-id="${i.id}">SubItems</button>
+        <button data-action="del-item" data-id="${i.id}">Delete</button>
       </td>
     </tr>
   `).join('');
@@ -55,8 +55,8 @@ function renderSubs(subs) {
       <td>${s.name}</td>
       <td>${s.description}</td>
       <td class="row-actions">
-        <button data-action="edit-sub" data-id="${s.id}">Edytuj</button>
-        <button data-action="del-sub"  data-id="${s.id}">Usuń</button>
+        <button data-action="edit-sub" data-id="${s.id}">Edit</button>
+        <button data-action="del-sub"  data-id="${s.id}">Delete</button>
       </td>
     </tr>
   `).join('');
@@ -65,7 +65,7 @@ function renderSubs(subs) {
 
 async function loadItems() {
   try { renderItems(await ItemAPI.all()); }
-  catch { toast('Błąd ładowania Itemów'); }
+  catch { toast('Error'); }
 }
 
 document.getElementById('create-form').addEventListener('submit', async e => {
@@ -93,7 +93,7 @@ document.body.addEventListener('click', async e => {
   if (action === 'sub') {
     currentItemId = id;
     document.getElementById('subitem-section').hidden = false;
-    document.getElementById('subitem-title').textContent = `SubItemy dla: ${id}`;
+    document.getElementById('subitem-title').textContent = `SubItems of: ${id}`;
     try { renderSubs(await SubAPI.list(id)); }
     catch { toast('Error'); }
   }
