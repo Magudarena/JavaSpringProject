@@ -1,12 +1,11 @@
 <!doctype html>
-<html lang="pl">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>To do list</title>
+  <title>To-Do List</title>
 
-  <link rel="stylesheet" href="styles.css">
-
+  <link rel="stylesheet" href="styles.css" />
   <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
@@ -17,38 +16,39 @@
 </head>
 <body>
 <main class="container">
-  <h1>Items &amp; SubItems</h1>
+  <header>
+    <h1>To do: Tasks and subitems</h1>
+  </header>
 
-  <!-- Sekcja tworzenia Itemu -->
   <section class="card" id="item-create">
-    <h2>Add new item</h2>
+    <h2>Add New task</h2>
     <form id="create-form" class="form">
-      <label for="name">Name:</label>
+      <label for="name">Name</label>
       <input id="name" name="name" type="text" required />
 
-      <label for="description">Description:</label>
+      <label for="description">Description</label>
       <textarea id="description" name="description" rows="3"></textarea>
 
-      <div class="form-actions">
+      <nav class="form-actions">
         <button type="submit" class="btn btn-primary">
           <i class="fas fa-plus"></i> Create
         </button>
         <button type="button" id="reload-btn" class="btn btn-info">
           <i class="fas fa-sync"></i> Refresh
         </button>
-      </div>
+      </nav>
     </form>
   </section>
 
   <section class="card" id="items-list">
-    <h2>Items list</h2>
+    <h2>To do list</h2>
     <table>
       <thead>
       <tr>
         <th>ID</th>
         <th>Name</th>
         <th>Description</th>
-        <th>Actions</th>
+        <th> </th> <!--//tu były actions-->
       </tr>
       </thead>
       <tbody id="items-tbody">
@@ -60,20 +60,19 @@
   </section>
 
   <section class="card" id="subitem-section" hidden>
-    <h2 id="subitem-title">SubItems: …</h2>
-
+    <h2 id="subitem-title">SubItems</h2>
     <form id="subitem-form" class="form">
-      <label for="sub-name">Name:</label>
+      <label for="sub-name">Name</label>
       <input id="sub-name" name="name" type="text" required />
 
-      <label for="sub-description">Description:</label>
+      <label for="sub-description">Description</label>
       <textarea id="sub-description" name="description" rows="2"></textarea>
 
-      <div class="form-actions">
+      <nav class="form-actions">
         <button type="submit" class="btn btn-accent">
           <i class="fas fa-plus"></i> Add SubItem
         </button>
-      </div>
+      </nav>
     </form>
 
     <table>
@@ -94,7 +93,7 @@
   </section>
 </main>
 
-<div id="toast" class="toast"></div>
+<aside id="toast" class="toast"></aside>
 
 <script src="app.js" type="module"></script>
 </body>
